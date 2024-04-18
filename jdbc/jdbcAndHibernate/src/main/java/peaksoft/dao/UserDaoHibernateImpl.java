@@ -1,18 +1,22 @@
 package peaksoft.dao;
 
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
 import peaksoft.model.User;
+import peaksoft.util.Util;
 
 import java.util.List;
 
 public class UserDaoHibernateImpl implements UserDao {
-
-    public UserDaoHibernateImpl() {
-
-    }
-
     @Override
     public void createUsersTable() {
 
+        try (Session session = Util.getSessionFactory().openSession()) {
+            session.beginTransaction();
+            session.getTransaction().commit();
+        } catch (HibernateException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     @Override
@@ -32,7 +36,7 @@ public class UserDaoHibernateImpl implements UserDao {
 
     @Override
     public List<User> getAllUsers() {
-        return null;
+
     }
 
     @Override
